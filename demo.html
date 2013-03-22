@@ -1,0 +1,84 @@
+<html>
+<head>
+<style>
+.foo,
+.content {
+    display: none;
+    font-size:30px;
+}
+</style>
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="jquery.word.sequence.js"></script>
+<script>
+$().ready(function() {
+$.wordSequencer();
+var wordCount = 2;
+var wordsPerMinute = 150;
+var fadeInTime = (60 * 100)/wordsPerMinute;
+var fadeOutTime = (60 * 100)/wordsPerMinute;
+var delayTime = (60 * 800)/wordsPerMinute;
+var startTime = (new Date()).getTime();
+var sentenceLen = 0;
+
+var showHide = function () {
+	var index = 0;
+	var words = $('.foo').text().split(' ');
+	sentenceLen = words.length;
+	var displayWords = "";
+
+    while (index < sentenceLen) {
+        nextIndex = index + wordCount;
+        if (nextIndex > sentenceLen) {
+            nextIndex = sentenceLen;
+        }
+        var wordGroup = words.slice(index, nextIndex);
+        len = wordGroup.length;
+        displayWords = '<div class="content" id="' + nextIndex+ '"><div>';
+        for (var i = 0; i < len; i++) {
+            if (i > 0) {
+                displayWords += ' ' + wordGroup[i];
+            } else {
+                displayWords += wordGroup[i];
+            }
+        }
+        displayWords += '</div></div>';
+        //$('.debug').append(displayWords);
+        if (displayWords) {
+            $('.contentPanel').append(displayWords);
+        }
+        index += wordCount;
+    }
+    
+};
+
+showHide();
+
+function fadeContent() {
+    $(".contentPanel .content:hidden:first").fadeIn(fadeInTime).delay(delayTime).fadeOut(fadeOutTime, function () {
+        $(this).appendTo($(this).parent());
+        //$('.debug').text($(this).text());
+        if( ! $('#' + sentenceLen).is(this) ) {
+            fadeContent();
+        }
+    });
+//$('.debug').text((new Date()).getTime() - startTime);
+}
+fadeContent();
+
+});
+</script>
+
+</head>
+<div class="foo">One Two Three Four Five Six Seven Eight Nine Ten Eleven, twelve, Thirteen, fourteen, fifteen
+
+Do you feel overwhelmed with content marketing?  As simple as it sounds, it’s easy to forget that there’s just as much marketing involved as there is content creation. Typically, this task falls squarely on the shoulders of the marketing department.  If this sounds like the track your content marketing strategy is on, it could be costing you more customers than it gains.
+
+So how can you make sure you’re developing a solid, actionable content marketing plan? Well, you’ll first have to avoid the following mistakes as they will derail your content strategy… here’s what to avoid:
+Mistake #1: Relying completely on the marketing department
+
+The first and most common mistake is dumping everything on the marketing department.  Compared to other departments in the company, this would make the most sense on the outside. If your company does this, you’re not alone:
+</div>
+<div class="contentPanel"></div>
+<span class="debug"></span>
+<input type="button" class="start" name="start" value="start"/>
+</html>
