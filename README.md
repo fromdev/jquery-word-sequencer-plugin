@@ -1,4 +1,4 @@
-jquery-word-sequencer-plugin
+jQuery Word Sequencer Plugin
 ============================
 
 jQuery word sequencer plugin for displaying words of a text based sentence in sequencial order
